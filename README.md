@@ -4,7 +4,7 @@ A web-based event management system where students can discover events and regis
 
 ## 📊 Flow Chart
 
-![Elite Event Flow Chart](elite-event-flowchart.png)
+![Elite Event Flow Chart](FLOWCHART.png)
 
 ## ✨ Features
 
