@@ -102,11 +102,15 @@ EVENTS
 
 ```text
 elite_event/
+│
 ├── admin/
 ├── teacher/
 ├── config/
+│   └── database.php
 ├── database/
+│   └── elite_event_mysql.sql
 ├── css/
+│   └── style.css
 ├── includes/
 ├── index.php
 ├── login.php
@@ -114,7 +118,8 @@ elite_event/
 ├── events.php
 ├── event-detail.php
 ├── create-event.php
-└── registrations.php
+├── registrations.php
+└── README.md
 ```
 
 ## 👥 User Roles
