@@ -124,31 +124,3 @@ elite_event/
 | Student | Browse events, register, view registrations |
 | Teacher | Manage events and view registrations |
 | Admin | Manage users, events, and registrations |
-
-## 📌 Project Flow
-
-```text
-             ELITE EVENT
-                  │
-       ┌──────────┼──────────┐
-       ▼          ▼          ▼
-    STUDENT     TEACHER     ADMIN
-       │          │          │
-       ▼          ▼          ▼
- Browse Events  Manage     Manage
-       │         Events     Users
-       ▼          │          │
- Event Details   ▼          ▼
-       │       View       Manage
-       ▼       Registrations Events
- Register
-       │
-       ▼
- Google Form
-       │
-       ▼
- Registration
-       │
-       ▼
-     MySQL
-```
