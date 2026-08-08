@@ -77,15 +77,7 @@ Main tables:
 
 ### Database Relationship
 
-```text
-USERS
-  │
-  ▼
-REGISTRATIONS
-  ▲
-  │
-EVENTS
-```
+![Elite Event Flow Chart](DatabaseRelationshipDiagram.png)
 
 ## 🛠️ Technologies
 
