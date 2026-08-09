@@ -1,4 +1,6 @@
-# 🎫 Elite Event – Event Management System
+<h1>
+  <img src="logo.png" width="40" height="40" alt="Elite Event Logo"> Elite Event – Event Management System
+</h1>
 
 A web-based event management system where students can discover events and register using Google Forms. Teachers and administrators can manage events, users, and registrations.
 
