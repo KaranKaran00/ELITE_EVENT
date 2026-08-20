@@ -123,3 +123,7 @@ elite_event/
 | Student | Browse events, register, view registrations |
 | Teacher | Manage events and view registrations |
 | Admin | Manage users, events, and registrations |
+
+## ER Digram
+
+
