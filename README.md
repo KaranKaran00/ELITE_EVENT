@@ -124,6 +124,7 @@ elite_event/
 | Teacher | Manage events and view registrations |
 | Admin | Manage users, events, and registrations |
 
-## ER Digram
+## 📎ER Digram
 
+![ER Diagram](image/ER%20Diagram.png)
 
