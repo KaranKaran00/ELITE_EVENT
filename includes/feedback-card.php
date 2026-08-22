@@ -10,10 +10,15 @@ $parts = explode(' ', trim($fb['user_name']));
 $initials = strtoupper(substr($parts[0], 0, 1) . (isset($parts[1]) ? substr($parts[1], 0, 1) : ''));
 ?>
 <div class="feedback-card">
-  <?php if (!empty($fb['photo_url'])): ?>
-    <div class="feedback-card-photo">
-      <img src="<?= htmlspecialchars($fb['photo_url']) ?>" alt="Photo from <?= htmlspecialchars($fb['user_name']) ?>" loading="lazy"
-           onerror="this.closest('.feedback-card-photo').style.display='none'">
+  <?php if (!empty($fb['media_url'])): ?>
+    <div class="feedback-card-media">
+      <?php if (($fb['media_type'] ?? 'image') === 'video'): ?>
+        <video src="<?= htmlspecialchars($fb['media_url']) ?>" controls muted playsinline preload="metadata"
+               onerror="this.closest('.feedback-card-media').style.display='none'"></video>
+      <?php else: ?>
+        <img src="<?= htmlspecialchars($fb['media_url']) ?>" alt="Photo from <?= htmlspecialchars($fb['user_name']) ?>" loading="lazy"
+             onerror="this.closest('.feedback-card-media').style.display='none'">
+      <?php endif; ?>
     </div>
   <?php endif; ?>
 

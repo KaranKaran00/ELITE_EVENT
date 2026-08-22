@@ -1,0 +1,4 @@
+# Uploaded feedback media is served as static files only — never executed.
+php_flag engine off
+AddHandler cgi-script .php .phtml .php3 .php4 .php5 .php7 .pl .py .cgi .asp .aspx .jsp
+Options -ExecCGI -Indexes

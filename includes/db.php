@@ -158,7 +158,8 @@ function db_install_or_migrate(PDO $pdo): void {
             user_id INT UNSIGNED NOT NULL,
             rating TINYINT UNSIGNED NOT NULL,
             comment TEXT NOT NULL,
-            photo_url VARCHAR(1000) NULL,
+            media_url VARCHAR(500) NULL,
+            media_type ENUM('image','video') NULL,
             created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
             PRIMARY KEY (id),
             UNIQUE KEY uq_feedback_event_user (event_id, user_id),
@@ -168,6 +169,19 @@ function db_install_or_migrate(PDO $pdo): void {
             CONSTRAINT fk_feedback_user FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
             CONSTRAINT chk_feedback_rating CHECK (rating BETWEEN 1 AND 5)
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci");
+    } else {
+        $fbColumns = $pdo->query("SELECT COLUMN_NAME FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = 'feedback'")->fetchAll(PDO::FETCH_COLUMN);
+        if (!in_array('media_url', $fbColumns, true)) {
+            // Older installs stored a link-only photo_url column; carry it over as media_url.
+            if (in_array('photo_url', $fbColumns, true)) {
+                $pdo->exec("ALTER TABLE feedback CHANGE photo_url media_url VARCHAR(500) NULL");
+            } else {
+                $pdo->exec("ALTER TABLE feedback ADD COLUMN media_url VARCHAR(500) NULL AFTER comment");
+            }
+        }
+        if (!in_array('media_type', $fbColumns, true)) {
+            $pdo->exec("ALTER TABLE feedback ADD COLUMN media_type ENUM('image','video') NULL AFTER media_url");
+        }
     }
 
     // Seed only when the tables are empty. Existing MySQL data is never overwritten.

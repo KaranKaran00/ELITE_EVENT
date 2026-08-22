@@ -106,11 +106,13 @@ function userFeedbackForEvent(int $userId, int $eventId): ?array {
 
 /**
  * Submits (or updates) a student's feedback for an event they registered for.
+ * $mediaUrl/$mediaType come from handleFeedbackMediaUpload() — pass both null
+ * to leave feedback with no photo/video attached, or reuse the existing
+ * values when updating feedback and no new file was chosen.
  * Returns true on success, or a string error message on failure.
  */
-function submitFeedback(int $userId, int $eventId, int $rating, string $comment, string $photoUrl) {
+function submitFeedback(int $userId, int $eventId, int $rating, string $comment, ?string $mediaUrl, ?string $mediaType) {
     $comment = trim($comment);
-    $photoUrl = trim($photoUrl);
 
     if (!userRegisteredForEvent($userId, $eventId)) {
         return 'You can only leave feedback for events you registered for.';
@@ -121,15 +123,16 @@ function submitFeedback(int $userId, int $eventId, int $rating, string $comment,
     if ($comment === '') {
         return 'Please write a short comment about the event.';
     }
-    if ($photoUrl !== '' && !filter_var($photoUrl, FILTER_VALIDATE_URL)) {
-        return 'The photo link does not look like a valid URL.';
+    if ($mediaType !== null && !in_array($mediaType, ['image', 'video'], true)) {
+        $mediaType = null;
+        $mediaUrl = null;
     }
 
     $stmt = db()->prepare(
-        'INSERT INTO feedback (event_id, user_id, rating, comment, photo_url) VALUES (?, ?, ?, ?, ?)
-         ON DUPLICATE KEY UPDATE rating = VALUES(rating), comment = VALUES(comment), photo_url = VALUES(photo_url), created_at = CURRENT_TIMESTAMP'
+        'INSERT INTO feedback (event_id, user_id, rating, comment, media_url, media_type) VALUES (?, ?, ?, ?, ?, ?)
+         ON DUPLICATE KEY UPDATE rating = VALUES(rating), comment = VALUES(comment), media_url = VALUES(media_url), media_type = VALUES(media_type), created_at = CURRENT_TIMESTAMP'
     );
-    $stmt->execute([$eventId, $userId, $rating, $comment, $photoUrl !== '' ? $photoUrl : null]);
+    $stmt->execute([$eventId, $userId, $rating, $comment, $mediaUrl, $mediaType]);
 
     return true;
 }

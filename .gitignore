@@ -1,0 +1,7 @@
+# Ignore actual uploaded feedback media, keep the folder structure
+uploads/feedback/*
+!uploads/feedback/.gitkeep
+!uploads/feedback/.htaccess
+
+# Local database config overrides (if the developer customizes it)
+config/database.local.php

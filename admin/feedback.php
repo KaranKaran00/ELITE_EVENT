@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/../includes/data.php';
+require_once __DIR__ . '/../includes/upload.php';
 $currentUser = require_role('admin');
 
 $notice = '';
@@ -13,8 +14,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if ($action === 'delete_feedback') {
             $id = (int) ($_POST['feedback_id'] ?? 0);
+            $stmt = db()->prepare('SELECT media_url FROM feedback WHERE id = ?');
+            $stmt->execute([$id]);
+            $mediaUrl = $stmt->fetchColumn();
+
             $stmt = db()->prepare('DELETE FROM feedback WHERE id = ?');
             $stmt->execute([$id]);
+            if ($mediaUrl) deleteFeedbackMedia($mediaUrl);
             $notice = 'Feedback removed.';
         }
     }
@@ -62,6 +68,7 @@ require_once __DIR__ . '/../includes/header.php';
           <span>Event</span>
           <span>Rating</span>
           <span>Comment</span>
+          <span>Media</span>
           <span></span>
         </div>
         <?php foreach ($allFeedback as $fb): ?>
@@ -70,6 +77,17 @@ require_once __DIR__ . '/../includes/header.php';
             <span><a href="../event-detail.php?id=<?= (int)$fb['event_id'] ?>"><?= htmlspecialchars($fb['event_title']) ?></a></span>
             <span><?= starRating((int)$fb['rating']) ?></span>
             <span style="overflow-wrap:anywhere;"><?= htmlspecialchars(mb_strimwidth($fb['comment'], 0, 120, '…')) ?></span>
+            <span>
+              <?php if (!empty($fb['media_url'])): ?>
+                <?php if ($fb['media_type'] === 'video'): ?>
+                  <video src="../<?= htmlspecialchars($fb['media_url']) ?>" muted style="width:48px;height:48px;object-fit:cover;border-radius:10px;background:#000;"></video>
+                <?php else: ?>
+                  <img src="../<?= htmlspecialchars($fb['media_url']) ?>" alt="" style="width:48px;height:48px;object-fit:cover;border-radius:10px;">
+                <?php endif; ?>
+              <?php else: ?>
+                <span style="color:var(--text-hint);">—</span>
+              <?php endif; ?>
+            </span>
             <span class="dashboard-row-actions">
               <form method="post" class="inline-form" onsubmit="return confirm('Remove this feedback?');">
                 <?= csrf_field() ?>
