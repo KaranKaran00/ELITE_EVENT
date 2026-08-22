@@ -9,6 +9,7 @@ $trending = array_slice($events, 0, 6);
 // stored in the database, so this list updates the moment an admin
 // adds or removes a post — no code changes needed.
 $instagramPosts = db()->query('SELECT * FROM instagram_posts ORDER BY id DESC LIMIT 6')->fetchAll();
+$testimonials = recentFeedback(6);
 ?>
 
 <!-- ── HERO ── -->
@@ -132,6 +133,20 @@ $instagramPosts = db()->query('SELECT * FROM instagram_posts ORDER BY id DESC LI
     </div>
   </div>
 </section>
+
+<?php if ($testimonials): ?>
+<!-- ── ATTENDEE FEEDBACK ── -->
+<section class="section section-soft">
+  <div class="container">
+    <div class="section-head feedback-section-head">
+      <h2>What attendees are saying</h2>
+    </div>
+    <div class="feedback-grid">
+      <?php foreach ($testimonials as $fb): include __DIR__ . '/includes/feedback-card.php'; endforeach; ?>
+    </div>
+  </div>
+</section>
+<?php endif; ?>
 
 <!-- ── CTA BANNER ── -->
 <section class="cta-banner">

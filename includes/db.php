@@ -74,7 +74,7 @@ function db(): PDO {
 }
 
 function db_install_or_migrate(PDO $pdo): void {
-    $requiredTables = ['users', 'instagram_posts', 'events', 'registrations'];
+    $requiredTables = ['users', 'instagram_posts', 'events', 'registrations', 'feedback'];
     $placeholders = implode(',', array_fill(0, count($requiredTables), '?'));
     $stmt = $pdo->prepare("SELECT TABLE_NAME FROM information_schema.TABLES WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME IN ($placeholders)");
     $stmt->execute($requiredTables);
@@ -148,6 +148,25 @@ function db_install_or_migrate(PDO $pdo): void {
             KEY idx_registrations_event (event_id),
             CONSTRAINT fk_reg_event FOREIGN KEY (event_id) REFERENCES events(id) ON DELETE CASCADE,
             CONSTRAINT fk_reg_user FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci");
+    }
+
+    if (!in_array('feedback', $tables, true)) {
+        $pdo->exec("CREATE TABLE feedback (
+            id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+            event_id INT UNSIGNED NOT NULL,
+            user_id INT UNSIGNED NOT NULL,
+            rating TINYINT UNSIGNED NOT NULL,
+            comment TEXT NOT NULL,
+            photo_url VARCHAR(1000) NULL,
+            created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+            PRIMARY KEY (id),
+            UNIQUE KEY uq_feedback_event_user (event_id, user_id),
+            KEY idx_feedback_event (event_id),
+            KEY idx_feedback_user (user_id),
+            CONSTRAINT fk_feedback_event FOREIGN KEY (event_id) REFERENCES events(id) ON DELETE CASCADE,
+            CONSTRAINT fk_feedback_user FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+            CONSTRAINT chk_feedback_rating CHECK (rating BETWEEN 1 AND 5)
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci");
     }
 

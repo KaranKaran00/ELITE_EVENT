@@ -68,3 +68,76 @@ function userRegistrations(int $userId): array {
     $stmt->execute([$userId]);
     return $stmt->fetchAll();
 }
+
+/* ---------- Feedback ---------- */
+
+/**
+ * Feedback for a single event, newest first, with the reviewer's name attached.
+ */
+function eventFeedback(int $eventId): array {
+    $stmt = db()->prepare(
+        'SELECT f.*, u.name AS user_name FROM feedback f JOIN users u ON u.id = f.user_id
+         WHERE f.event_id = ? ORDER BY f.created_at DESC'
+    );
+    $stmt->execute([$eventId]);
+    return $stmt->fetchAll();
+}
+
+/**
+ * Recent feedback across all events, for the homepage testimonial cards.
+ */
+function recentFeedback(int $limit = 6): array {
+    $limit = max(1, $limit);
+    $stmt = db()->prepare(
+        'SELECT f.*, u.name AS user_name, e.title AS event_title FROM feedback f
+         JOIN users u ON u.id = f.user_id JOIN events e ON e.id = f.event_id
+         ORDER BY f.created_at DESC LIMIT ' . $limit
+    );
+    $stmt->execute();
+    return $stmt->fetchAll();
+}
+
+function userFeedbackForEvent(int $userId, int $eventId): ?array {
+    $stmt = db()->prepare('SELECT * FROM feedback WHERE user_id = ? AND event_id = ? LIMIT 1');
+    $stmt->execute([$userId, $eventId]);
+    $row = $stmt->fetch();
+    return $row ?: null;
+}
+
+/**
+ * Submits (or updates) a student's feedback for an event they registered for.
+ * Returns true on success, or a string error message on failure.
+ */
+function submitFeedback(int $userId, int $eventId, int $rating, string $comment, string $photoUrl) {
+    $comment = trim($comment);
+    $photoUrl = trim($photoUrl);
+
+    if (!userRegisteredForEvent($userId, $eventId)) {
+        return 'You can only leave feedback for events you registered for.';
+    }
+    if ($rating < 1 || $rating > 5) {
+        return 'Please choose a star rating from 1 to 5.';
+    }
+    if ($comment === '') {
+        return 'Please write a short comment about the event.';
+    }
+    if ($photoUrl !== '' && !filter_var($photoUrl, FILTER_VALIDATE_URL)) {
+        return 'The photo link does not look like a valid URL.';
+    }
+
+    $stmt = db()->prepare(
+        'INSERT INTO feedback (event_id, user_id, rating, comment, photo_url) VALUES (?, ?, ?, ?, ?)
+         ON DUPLICATE KEY UPDATE rating = VALUES(rating), comment = VALUES(comment), photo_url = VALUES(photo_url), created_at = CURRENT_TIMESTAMP'
+    );
+    $stmt->execute([$eventId, $userId, $rating, $comment, $photoUrl !== '' ? $photoUrl : null]);
+
+    return true;
+}
+
+/**
+ * Renders the ⭐ stars for a given rating (1-5), used by the feedback card partial.
+ */
+function starRating(int $rating): string {
+    $rating = max(0, min(5, $rating));
+    return str_repeat('⭐', $rating) . str_repeat('☆', 5 - $rating);
+}

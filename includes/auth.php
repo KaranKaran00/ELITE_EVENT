@@ -144,42 +144,11 @@ function logout_user(): void {
 }
 
 /**
- * Creates a new account. $role must be 'student' or 'teacher' —
- * public signup is never allowed to create admin accounts.
+ * NOTE: Public self-registration has been removed. Accounts are only
+ * ever created by an admin, from admin/users.php's create_user action
+ * (see that file). There is intentionally no register_user() here
+ * that a public-facing page could call.
  */
-function register_user(string $name, string $email, string $password, string $role) {
-    $name  = trim($name);
-    $email = trim($email);
-
-    if ($name === '' || $email === '' || $password === '') {
-        return 'Please fill in all required fields.';
-    }
-    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        return 'Enter a valid email address.';
-    }
-    if (strlen($password) < 8) {
-        return 'Password must be at least 8 characters.';
-    }
-    if (!in_array($role, ['student', 'teacher'], true)) {
-        return 'Invalid account type.';
-    }
-
-    $stmt = db()->prepare('SELECT id FROM users WHERE email = ?');
-    $stmt->execute([$email]);
-    if ($stmt->fetch()) {
-        return 'An account with that email already exists.';
-    }
-
-    $stmt = db()->prepare(
-        'INSERT INTO users (name, email, password_hash, role) VALUES (?, ?, ?, ?)'
-    );
-    $stmt->execute([$name, $email, password_hash($password, PASSWORD_DEFAULT), $role]);
-
-    session_regenerate_id(true);
-    $_SESSION['user_id'] = db()->lastInsertId();
-
-    return true;
-}
 
 /**
  * Where a logged-in user's dashboard/home lives, by role.
