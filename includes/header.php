@@ -44,15 +44,15 @@ $roleHome = $currentUser ? base_path() . role_home($currentUser['role']) : '';
 
   <div class="nav-links">
     <a class="nav-link" href="<?= $basePath ?>index.php"><i class="ti ti-home"></i> Home</a>
-    <a class="nav-link" href="<?= $basePath ?>events.php"><i class="ti ti-calendar-event"></i> Find Events</a>
+    <a class="nav-link" href="<?= $basePath ?>events.php"><i class="ti ti-calendar-event"></i>Events</a>
 
     <?php if ($currentUser && $currentUser['role'] === 'admin'): ?>
       <a class="nav-link" href="<?= $basePath ?>admin/dashboard.php"><i class="ti ti-shield-lock"></i> Admin Panel</a>
-      <a class="nav-link" href="<?= $basePath ?>admin/users.php"><i class="ti ti-users"></i> Manage Users</a>
+      <a class="nav-link" href="<?= $basePath ?>admin/users.php"><i class="ti ti-users"></i>Users</a>
       <a class="nav-link" href="<?= $basePath ?>admin/registrations.php"><i class="ti ti-clipboard-check"></i> Registrations</a>
       <a class="nav-link" href="<?= $basePath ?>create-event.php"><i class="ti ti-circle-plus"></i> Create Event</a>
-      <a class="nav-link" href="<?= $basePath ?>admin/instagram.php"><i class="ti ti-brand-instagram"></i> Instagram</a>
-      <a class="nav-link" href="<?= $basePath ?>admin/feedback.php"><i class="ti ti-message-star"></i> Feedback</a>
+      <a class="nav-link" href="<?= $basePath ?>admin/instagram.php"><i class="ti ti-brand-instagram"></i> Insta</a>
+      <a class="nav-link" href="<?= $basePath ?>admin/feedback.php"><i class="ti ti-message-star"></i> FB</a>
 
     <?php elseif ($currentUser && $currentUser['role'] === 'teacher'): ?>
       <a class="nav-link" href="<?= $basePath ?>teacher/dashboard.php"><i class="ti ti-layout-dashboard"></i> Dashboard</a>
