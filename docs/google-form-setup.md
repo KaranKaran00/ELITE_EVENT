@@ -71,4 +71,4 @@ The `registrations` table stores:
 
 The database has a UNIQUE constraint on `(event_id, user_id)`, so duplicate registrations are blocked at database level.
 
-See `MYSQL_SETUP.md` for XAMPP/phpMyAdmin setup.
+See `mysql-setup.md` for XAMPP/phpMyAdmin setup.

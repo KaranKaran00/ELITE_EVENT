@@ -1,6 +1,5 @@
 <?php
 require_once __DIR__ . '/includes/data.php';
-require_once __DIR__ . '/includes/upload.php';
 
 $id = (int)($_GET['id'] ?? 0);
 $event = getEventById($events, $id);
@@ -16,59 +15,6 @@ if (!$event) {
 $registrationMessage = '';
 $registrationError = '';
 $isRegistered = $currentUser ? userRegisteredForEvent((int)$currentUser['id'], $id) : false;
-
-$feedbackMessage = '';
-$feedbackError = '';
-$myFeedback = $currentUser ? userFeedbackForEvent((int)$currentUser['id'], $id) : null;
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'feedback') {
-    if (!$currentUser || $currentUser['role'] !== 'student') {
-        $feedbackError = 'Only student accounts can leave feedback.';
-    } elseif (!csrf_verify()) {
-        $feedbackError = 'Your form session expired. Please refresh the page and try again.';
-    } else {
-        // Keep the existing photo/video unless the student picked a new file.
-        $previousMediaUrl = $myFeedback['media_url'] ?? null;
-        $mediaUrl  = $previousMediaUrl;
-        $mediaType = $myFeedback['media_type'] ?? null;
-
-        $upload = handleFeedbackMediaUpload($_FILES['media'] ?? []);
-        if ($upload === 'none') {
-            // No new file chosen — reuse whatever was there before, unless removed below.
-            if (!empty($_POST['remove_media'])) {
-                $mediaUrl = null;
-                $mediaType = null;
-            }
-        } elseif (is_string($upload)) {
-            $feedbackError = $upload;
-        } else {
-            $mediaUrl  = $upload['url'];
-            $mediaType = $upload['type'];
-        }
-
-        if (!$feedbackError) {
-            $result = submitFeedback(
-                (int)$currentUser['id'],
-                $id,
-                (int)($_POST['rating'] ?? 0),
-                $_POST['comment'] ?? '',
-                $mediaUrl,
-                $mediaType
-            );
-            if ($result === true) {
-                if ($previousMediaUrl && $previousMediaUrl !== $mediaUrl) {
-                    deleteFeedbackMedia($previousMediaUrl);
-                }
-                $feedbackMessage = 'Thanks for sharing your feedback!';
-                $myFeedback = userFeedbackForEvent((int)$currentUser['id'], $id);
-            } else {
-                $feedbackError = $result;
-            }
-        }
-    }
-}
-
-$eventFeedback = eventFeedback($id);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'register') {
     if (!$currentUser) {
@@ -171,74 +117,6 @@ if ($formUrl && !str_contains($formUrl, 'embedded=true')) $formUrl .= (str_conta
   </div>
 </section>
 <?php endif; ?>
-
-<section class="section" id="feedback">
-  <div class="container">
-    <div class="section-head feedback-section-head">
-      <h2>Attendee feedback</h2>
-      <?php if ($eventFeedback): ?><span class="see-all"><?= count($eventFeedback) ?> review<?= count($eventFeedback) === 1 ? '' : 's' ?></span><?php endif; ?>
-    </div>
-
-    <?php if ($eventFeedback): ?>
-      <div class="feedback-grid">
-        <?php foreach ($eventFeedback as $fb): include __DIR__ . '/includes/feedback-card.php'; endforeach; ?>
-      </div>
-    <?php else: ?>
-      <p style="color:var(--text-hint);">No feedback yet — be the first to share how it went!</p>
-    <?php endif; ?>
-
-    <?php if ($feedbackMessage): ?><div class="form-success registration-alert" style="margin-top:20px;">✅ <?= htmlspecialchars($feedbackMessage) ?></div><?php endif; ?>
-    <?php if ($feedbackError): ?><div class="form-error registration-alert" style="margin-top:20px;">⚠️ <?= htmlspecialchars($feedbackError) ?></div><?php endif; ?>
-
-    <?php if ($currentUser && $currentUser['role'] === 'student' && $isRegistered): ?>
-      <div class="feedback-form-card">
-        <h3><?= $myFeedback ? 'Update your feedback' : 'Leave your feedback' ?></h3>
-        <p class="form-help">Only attendees who registered for this event can leave feedback.</p>
-        <form method="post" class="event-form" enctype="multipart/form-data" style="border:none; box-shadow:none; padding:0; margin-top:14px;">
-          <?= csrf_field() ?>
-          <input type="hidden" name="action" value="feedback">
-
-          <div class="form-field" style="margin-bottom:16px;">
-            <label>Your rating</label>
-            <div class="star-select">
-              <?php for ($i = 5; $i >= 1; $i--): ?>
-                <input type="radio" name="rating" id="star<?= $i ?>" value="<?= $i ?>" <?= ($myFeedback['rating'] ?? 0) == $i ? 'checked' : '' ?> required>
-                <label for="star<?= $i ?>">★</label>
-              <?php endfor; ?>
-            </div>
-          </div>
-
-          <div class="form-field" style="margin-bottom:16px;">
-            <label for="comment">Your comment</label>
-            <textarea id="comment" name="comment" rows="3" placeholder="Amazing event! Had a great experience and met so many people." required><?= htmlspecialchars($myFeedback['comment'] ?? '') ?></textarea>
-          </div>
-
-          <div class="form-field" style="margin-bottom:16px;">
-            <label for="media">Photo or video (optional)</label>
-            <?php if (!empty($myFeedback['media_url'])): ?>
-              <div class="feedback-media-current">
-                <?php if ($myFeedback['media_type'] === 'video'): ?>
-                  <video src="<?= htmlspecialchars($myFeedback['media_url']) ?>" muted></video>
-                <?php else: ?>
-                  <img src="<?= htmlspecialchars($myFeedback['media_url']) ?>" alt="Your current upload">
-                <?php endif; ?>
-                <label class="feedback-media-remove"><input type="checkbox" name="remove_media" value="1"> Remove this file</label>
-              </div>
-            <?php endif; ?>
-            <input type="file" id="media" name="media" accept="image/jpeg,image/png,image/webp,image/gif,video/mp4,video/webm,video/quicktime">
-            <p class="form-help">JPG/PNG/WEBP/GIF up to <?= FEEDBACK_MAX_IMAGE_MB ?>MB, or MP4/WEBM/MOV up to <?= FEEDBACK_MAX_VIDEO_MB ?>MB.</p>
-          </div>
-
-          <button type="submit" class="btn btn-primary"><?= $myFeedback ? 'Update feedback' : 'Submit feedback' ?></button>
-        </form>
-      </div>
-    <?php elseif ($currentUser && $currentUser['role'] === 'student' && !$isRegistered): ?>
-      <div class="feedback-already" style="background:#fff7e8; color:#765313;">Register for this event to leave feedback once you've attended.</div>
-    <?php elseif (!$currentUser): ?>
-      <div class="feedback-already" style="background:#fff7e8; color:#765313;"><a href="login.php">Log in</a> as a student to leave feedback.</div>
-    <?php endif; ?>
-  </div>
-</section>
 
 <?php if (!empty($related)): ?>
 <section class="section section-soft">

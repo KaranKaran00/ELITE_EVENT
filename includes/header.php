@@ -52,7 +52,6 @@ $roleHome = $currentUser ? base_path() . role_home($currentUser['role']) : '';
       <a class="nav-link" href="<?= $basePath ?>admin/registrations.php"><i class="ti ti-clipboard-check"></i> Registrations</a>
       <a class="nav-link" href="<?= $basePath ?>create-event.php"><i class="ti ti-circle-plus"></i> Create Event</a>
       <a class="nav-link" href="<?= $basePath ?>admin/instagram.php"><i class="ti ti-brand-instagram"></i> Insta</a>
-      <a class="nav-link" href="<?= $basePath ?>admin/feedback.php"><i class="ti ti-message-star"></i> FB</a>
 
     <?php elseif ($currentUser && $currentUser['role'] === 'teacher'): ?>
       <a class="nav-link" href="<?= $basePath ?>teacher/dashboard.php"><i class="ti ti-layout-dashboard"></i> Dashboard</a>

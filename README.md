@@ -1,12 +1,12 @@
 <h1>
-  <img src="logo.png" width="40" height="40" alt="Elite Event Logo"> Elite Event – Event Management System
+  <img src="docs/logo.png" width="40" height="40" alt="Elite Event Logo"> Elite Event – Event Management System
 </h1>
 
 A web-based event management system where students can discover events and register using Google Forms. Teachers and administrators can manage events, users, and registrations.
 
 ## 📊 Flow Chart
 
-![Elite Event Flow Chart](FLOWCHART.png)
+![Elite Event Flow Chart](docs/flowchart.png)
 
 ## ✨ Features
 
@@ -79,7 +79,7 @@ Main tables:
 
 ### Database Relationship
 
-![Elite Event Flow Chart](DatabaseRelationshipDiagram.png)
+![Elite Event Flow Chart](docs/database-relationship-diagram.png)
 
 ## 🛠️ Technologies
 
@@ -97,24 +97,27 @@ Main tables:
 ```text
 elite_event/
 │
-├── admin/
-├── teacher/
+├── admin/              Admin dashboard, users, registrations, Instagram
+├── teacher/             Teacher dashboard
 ├── config/
-│   └── database.php
+│   └── database.php     DB connection settings
 ├── database/
 │   └── elite_event_mysql.sql
 ├── css/
 │   └── style.css
-├── includes/
+├── includes/            Shared PHP (auth, data access, header/footer)
+├── docs/                Diagrams, logo, and setup guides
 ├── index.php
-├── login.php
+├── login.php / admin-login.php / student-login.php / teacher-login.php
 ├── signup.php
 ├── events.php
 ├── event-detail.php
 ├── create-event.php
-├── registrations.php
+├── dashboard.php
 └── README.md
 ```
+
+See `docs/mysql-setup.md` and `docs/google-form-setup.md` for setup guides.
 
 ## 👥 User Roles
 
@@ -126,5 +129,5 @@ elite_event/
 
 ## 📎ER Digram
 
-![ER Diagram](image/ER%20Diagram.png)
+![ER Diagram](docs/er-diagram.png)
 
