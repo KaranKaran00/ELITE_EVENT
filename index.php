@@ -32,6 +32,7 @@ $instagramPosts = db()->query('SELECT * FROM instagram_posts ORDER BY id DESC LI
         </select>
       </div>
       <button type="submit" class="btn btn-primary hero-search-btn">Search</button>
+
     </form>
 
     <div class="hero-trending">
@@ -42,6 +43,9 @@ $instagramPosts = db()->query('SELECT * FROM instagram_posts ORDER BY id DESC LI
       <a href="events.php?category=food">Food &amp; drink</a>
     </div>
   </div>
+  <br>
+      <br>
+
 </section>
 
 <!-- ── BROWSE BY CATEGORY ── -->
