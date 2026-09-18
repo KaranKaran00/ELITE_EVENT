@@ -81,7 +81,9 @@ $instagramPosts = db()->query('SELECT * FROM instagram_posts ORDER BY id DESC LI
           <a href="create-event.php" class="btn btn-primary">Create an event</a>
         <?php endif; ?>
       </div>
-      <div class="about-image">🎉</div>
+      <div class="about-image">
+      <img src="docs/logo.png" alt="Elite Event Logo">
+      </div>
     </div>
 
     <!-- Stats bar -->
