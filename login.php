@@ -1,7 +1,4 @@
 <?php
-/* login.php — role picker. The actual authentication happens on
-   the three dedicated forms below; this page just routes people
-   to the right one (and bounces already-logged-in users home). */
 require_once __DIR__ . '/includes/data.php';
 
 if ($currentUser) {
