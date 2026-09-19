@@ -82,7 +82,7 @@ $instagramPosts = db()->query('SELECT * FROM instagram_posts ORDER BY id DESC LI
         <?php endif; ?>
       </div>
       <div class="about-image">
-      <img src="docs/logo.png" alt="Elite Event Logo">
+      <img src="docs/img2.jfif" alt="Elite Event Logo">
       </div>
     </div>
 
