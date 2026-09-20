@@ -4,14 +4,9 @@ require_once __DIR__ . '/includes/data.php';
 require_once __DIR__ . '/includes/header.php';
 
 $trending = array_slice($events, 0, 6);
-
-// Instagram posts are managed by admins from admin/instagram.php and
-// stored in the database, so this list updates the moment an admin
-// adds or removes a post — no code changes needed.
 $instagramPosts = db()->query('SELECT * FROM instagram_posts ORDER BY id DESC LIMIT 6')->fetchAll();
 ?>
 
-<!-- ── HERO ── -->
 <section class="hero">
   <div class="hero-inner">
     <h1>Find your next<br><strong>unforgettable<br>thing to do</strong></h1>
@@ -48,7 +43,6 @@ $instagramPosts = db()->query('SELECT * FROM instagram_posts ORDER BY id DESC LI
 
 </section>
 
-<!-- ── BROWSE BY CATEGORY ── -->
 <section class="section">
   <div class="container">
     <div class="section-head">
@@ -68,7 +62,6 @@ $instagramPosts = db()->query('SELECT * FROM instagram_posts ORDER BY id DESC LI
   </div>
 </section>
 
-<!-- ── MAKING MOMENTS MEMORABLE (matching image section) ── -->
 <section class="section" style="background: var(--warm-white);">
   <div class="container">
     <div class="about-split">
@@ -86,7 +79,6 @@ $instagramPosts = db()->query('SELECT * FROM instagram_posts ORDER BY id DESC LI
       </div>
     </div>
 
-    <!-- Stats bar -->
     <div class="stats-bar">
       <div class="stat-item">
         <span class="stat-icon">📅</span>
@@ -113,7 +105,6 @@ $instagramPosts = db()->query('SELECT * FROM instagram_posts ORDER BY id DESC LI
   </div>
 </section>
 
-<!-- ── TRENDING EVENTS ── -->
 <section class="section section-soft">
   <div class="container">
     <div class="section-head">
@@ -139,7 +130,6 @@ $instagramPosts = db()->query('SELECT * FROM instagram_posts ORDER BY id DESC LI
   </div>
 </section>
 
-<!-- ── CTA BANNER ── -->
 <section class="cta-banner">
   <div class="container cta-banner-inner">
     <div>
@@ -150,7 +140,6 @@ $instagramPosts = db()->query('SELECT * FROM instagram_posts ORDER BY id DESC LI
   </div>
 </section>
 
-<!-- ── INSTAGRAM SECTION ── -->
 <section class="section instagram-section">
   <div class="container">
     <div class="section-head">
