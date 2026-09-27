@@ -1446,3 +1446,157 @@ body {
   }
 }
 
+
+
+/* =========================================================
+   COMPACT PROFESSIONAL FOOTER
+   ========================================================= */
+
+   .footer {
+    background: #171108;
+    color: #ffffff;
+    padding: 28px 7% 14px;
+    margin-top: 0;
+    border: none !important;
+}
+
+.footer-container {
+    max-width: 1180px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1.2fr 1fr auto;
+    align-items: center;
+    gap: 25px;
+}
+
+/* Brand */
+
+.footer-brand {
+    text-align: left;
+}
+
+.footer-logo {
+    color: var(--gold, #D99A00);
+    font-size: 1.15rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+}
+
+.footer-brand p {
+    margin: 2px 0 0;
+    color: #a9a39a;
+    font-size: 0.78rem;
+}
+
+/* Navigation */
+
+.footer-links {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.footer-links a {
+    color: #c7c1b7;
+    font-size: 0.82rem;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.footer-links a:hover {
+    color: var(--gold, #D99A00);
+}
+
+/* Social */
+
+.footer-social {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 9px;
+}
+
+.footer-social a {
+    width: 32px;
+    height: 32px;
+    border: 1px solid #40382c;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #c7c1b7;
+    text-decoration: none;
+    font-size: 0.85rem;
+    transition: all 0.2s ease;
+}
+
+.footer-social a:hover {
+    color: var(--gold, #D99A00);
+    border-color: var(--gold, #D99A00);
+    transform: translateY(-1px);
+}
+
+/* Bottom */
+
+.footer-bottom {
+    max-width: 1180px;
+    margin: 20px auto 0;
+    padding-top: 12px;
+    border-top: 1px solid #30291f;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    color: #817a70;
+    font-size: 0.72rem;
+}
+
+.footer-bottom strong {
+    color: var(--gold, #D99A00);
+    font-weight: 600;
+}
+
+/* Remove unwanted top line */
+
+.site-footer,
+.footer {
+    border-top: none !important;
+}
+
+/* Mobile */
+
+@media (max-width: 800px) {
+
+    .footer {
+        padding: 28px 20px 14px;
+    }
+
+    .footer-container {
+        grid-template-columns: 1fr;
+        text-align: center;
+        gap: 18px;
+    }
+
+    .footer-brand {
+        text-align: center;
+    }
+
+    .footer-links {
+        justify-content: center;
+        gap: 14px;
+    }
+
+    .footer-social {
+        justify-content: center;
+    }
+
+    .footer-bottom {
+        margin-top: 18px;
+        padding-top: 12px;
+        flex-direction: column;
+        text-align: center;
+        gap: 4px;
+    }
+}
