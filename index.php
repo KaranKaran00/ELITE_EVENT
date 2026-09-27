@@ -69,7 +69,7 @@ $instagramPosts = db()->query('SELECT * FROM instagram_posts ORDER BY id DESC LI
         <h2>Making<br>Moments<br><em>Memorable</em></h2>
         <p>Elite Event is your go-to place to discover amazing events, connect with like-minded people, and create lasting memories.</p>
         <?php if (!$currentUser): ?>
-          <a href="signup.php" class="btn btn-primary">Create an account</a>
+          <a href="events.php" class="btn btn-primary">Browse events</a>
         <?php else: ?>
           <a href="create-event.php" class="btn btn-primary">Create an event</a>
         <?php endif; ?>

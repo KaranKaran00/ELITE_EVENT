@@ -28,8 +28,13 @@ $roleHome = $currentUser ? base_path() . role_home($currentUser['role']) : '';
     $projectDir = str_replace('\\', '/', realpath(__DIR__ . '/..'));
     $basePath   = '/' . ltrim(str_replace($docRoot, '', $projectDir), '/');
     $basePath   = rtrim($basePath, '/') . '/';
+    // Cache-bust: append the CSS file's last-modified time as a version
+    // query string, so the browser always fetches the latest style.css
+    // after an edit instead of serving a stale cached copy.
+    $cssFile = __DIR__ . '/../css/style.css';
+    $cssVer  = file_exists($cssFile) ? filemtime($cssFile) : time();
   ?>
-  <link rel="stylesheet" href="<?= htmlspecialchars($basePath) ?>css/style.css" />
+  <link rel="stylesheet" href="<?= htmlspecialchars($basePath) ?>css/style.css?v=<?= $cssVer ?>" />
 </head>
 <body>
 
@@ -72,8 +77,7 @@ $roleHome = $currentUser ? base_path() . role_home($currentUser['role']) : '';
       <a href="<?= $roleHome ?>" class="btn btn-ghost btn-sm">Dashboard</a>
       <a href="<?= $basePath ?>logout.php" class="btn btn-ghost btn-sm">Log out</a>
     <?php else: ?>
-      <a href="<?= $basePath ?>login.php"  class="btn btn-ghost btn-sm">Log in</a>
-      <a href="<?= $basePath ?>signup.php" class="btn btn-primary btn-sm">Sign up</a>
+      <a href="<?= $basePath ?>login.php" class="btn btn-primary btn-sm">Log in</a>
     <?php endif; ?>
   </div>
 </nav>

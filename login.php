@@ -12,7 +12,7 @@ require_once __DIR__ . '/includes/header.php';
 
 <section class="auth-section">
   <div class="container auth-container">
-    <div class="auth-card" style="max-width: 640px;">
+    <div class="auth-card" style="max-width: 560px;">
       <h1>Welcome back 👋</h1>
       <p class="auth-sub">Choose how you'd like to log in.</p>
 
@@ -27,12 +27,10 @@ require_once __DIR__ . '/includes/header.php';
           <span class="role-picker-title">Teacher</span>
           <span class="role-picker-desc">Create &amp; manage your own events</span>
         </a>
-        <a href="admin-login.php" class="role-picker-option role-picker-admin">
-          <i class="ti ti-shield-lock"></i>
-          <span class="role-picker-title">Admin</span>
-          <span class="role-picker-desc">Manage accounts &amp; site content</span>
-        </a>
       </div>
+      <!-- Admin login is intentionally not listed here. It stays reachable only
+           via the direct URL admin-login.php (see the small link in the site
+           footer), so it is never advertised to regular users. -->
 
       <p class="auth-switch">New here? <a href="signup.php">Sign up</a></p>
     </div>

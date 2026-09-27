@@ -688,8 +688,8 @@ body {
    ============================================================ */
 .role-picker {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 14px;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px;
   margin: 8px 0 22px;
 }
 
@@ -698,8 +698,8 @@ body {
   flex-direction: column;
   align-items: center;
   text-align: center;
-  gap: 6px;
-  padding: 22px 12px;
+  gap: 10px;
+  padding: 36px 20px;
   border: 1.5px solid var(--border-mid);
   border-radius: var(--radius-md);
   text-decoration: none;
@@ -712,13 +712,13 @@ body {
   box-shadow: var(--shadow-sm);
 }
 
-.role-picker-option i { font-size: 26px; }
+.role-picker-option i { font-size: 34px; }
 .role-picker-student i { color: var(--green); }
 .role-picker-teacher i { color: var(--blue); }
 .role-picker-admin i   { color: var(--purple); }
 
-.role-picker-title { font-weight: 700; font-size: 14px; }
-.role-picker-desc  { font-size: 12px; color: var(--text-hint); line-height: 1.4; }
+.role-picker-title { font-weight: 700; font-size: 16px; }
+.role-picker-desc  { font-size: 13px; color: var(--text-hint); line-height: 1.4; }
 
 @media (max-width: 600px) {
   .role-picker { grid-template-columns: 1fr; }
@@ -1271,6 +1271,32 @@ body {
 
 .footer a { color: var(--gold); text-decoration: none; }
 .footer a:hover { opacity: 0.8; }
+
+.footer p { margin: 0 0 10px; }
+.footer p:last-child { margin-bottom: 0; }
+
+.footer-contact a i,
+.footer-social a { color: var(--gold); }
+
+.footer-social { display: flex; justify-content: center; gap: 14px; font-size: 16px; }
+.footer-social a:hover { opacity: 0.8; }
+
+.footer-bottom {
+  padding-top: 10px;
+  border-top: 1px solid rgba(255,255,255,0.08);
+  font-size: 12px;
+  color: rgba(255,255,255,0.4);
+}
+
+/* Intentionally understated: no visible label, small target — present
+   for the site owner, not advertised to visitors. */
+.footer-admin-link {
+  color: rgba(255,255,255,0.25);
+  font-size: 12px;
+  margin-left: 8px;
+  opacity: 0.6;
+}
+.footer-admin-link:hover { color: rgba(255,255,255,0.5); opacity: 1; }
 
 /* ============================================================
    RESPONSIVE
