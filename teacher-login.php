@@ -46,7 +46,7 @@ require_once __DIR__ . '/includes/header.php';
         <button type="submit" class="btn btn-primary btn-block">Log in as Teacher</button>
       </form>
 
-      <p class="auth-note">Not a teacher? <a href="student-login.php">Student login</a> · <a href="admin-login.php">Admin login</a></p>
+      <p class="auth-note">Not a teacher? <a href="student-login.php">Student login</a></p>
       <p class="auth-switch">New here? <a href="signup.php">Sign up</a></p>
     </div>
   </div>
