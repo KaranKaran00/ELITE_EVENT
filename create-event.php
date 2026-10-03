@@ -40,7 +40,7 @@ if ($submitted) {
 
         if ($error === '') {
             if ($editEvent) {
-                $stmt = db()->prepare('UPDATE events SET title=?, category=?, date=?, time=?, venue=?, city=?, description=?, google_form_url=?, updated_at=datetime(\'now\') WHERE id=?');
+                $stmt = db()->prepare('UPDATE events SET title=?, category=?, date=?, time=?, venue=?, city=?, description=?, google_form_url=?, updated_at=NOW() WHERE id=?');
                 $stmt->execute([$title,$category,$date,$time,$venue,$city,$description,$googleFormUrl !== '' ? $googleFormUrl : null,(int)$editEvent['id']]);
                 $success = 'Event updated successfully.';
                 $editEvent = array_merge($editEvent, compact('title','category','date','time','venue','city','description'), ['google_form_url'=>$googleFormUrl]);
