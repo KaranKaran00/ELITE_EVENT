@@ -28,17 +28,19 @@ $roleHome = $currentUser ? base_path() . role_home($currentUser['role']) : '';
     $projectDir = str_replace('\\', '/', realpath(__DIR__ . '/..'));
     $basePath   = '/' . ltrim(str_replace($docRoot, '', $projectDir), '/');
     $basePath   = rtrim($basePath, '/') . '/';
-    // Cache-bust the main stylesheet so edits are picked up immediately.
+    // Cache-bust: append the CSS file's last-modified time as a version
+    // query string, so the browser always fetches the latest style.css
+    // after an edit instead of serving a stale cached copy.
     $cssFile = __DIR__ . '/../css/style.css';
     $cssVer  = file_exists($cssFile) ? filemtime($cssFile) : time();
   ?>
   <link rel="stylesheet" href="<?= htmlspecialchars($basePath) ?>css/style.css?v=<?= $cssVer ?>" />
-  <link rel="stylesheet" href="<?= htmlspecialchars($basePath) ?>css/apple-design.css?v=1" />
 </head>
 <body>
 
 <nav class="nav">
-  <a class="nav-logo" href="<?= $basePath ?>index.php" aria-label="Elite Event home">
+  <!-- Logo matching the circular design in the image -->
+  <a class="nav-logo" href="<?= $basePath ?>index.php">
     <div class="nav-logo-badge">
       <span class="logo-elite">Elite</span>
       <span class="logo-event">EVENT</span>
@@ -47,11 +49,11 @@ $roleHome = $currentUser ? base_path() . role_home($currentUser['role']) : '';
 
   <div class="nav-links">
     <a class="nav-link" href="<?= $basePath ?>index.php"><i class="ti ti-home"></i> Home</a>
-    <a class="nav-link" href="<?= $basePath ?>events.php"><i class="ti ti-calendar-event"></i> Events</a>
+    <a class="nav-link" href="<?= $basePath ?>events.php"><i class="ti ti-calendar-event"></i>Events</a>
 
     <?php if ($currentUser && $currentUser['role'] === 'admin'): ?>
       <a class="nav-link" href="<?= $basePath ?>admin/dashboard.php"><i class="ti ti-shield-lock"></i> Admin Panel</a>
-      <a class="nav-link" href="<?= $basePath ?>admin/users.php"><i class="ti ti-users"></i> Users</a>
+      <a class="nav-link" href="<?= $basePath ?>admin/users.php"><i class="ti ti-users"></i>Users</a>
       <a class="nav-link" href="<?= $basePath ?>admin/registrations.php"><i class="ti ti-clipboard-check"></i> Registrations</a>
       <a class="nav-link" href="<?= $basePath ?>create-event.php"><i class="ti ti-circle-plus"></i> Create Event</a>
       <a class="nav-link" href="<?= $basePath ?>admin/instagram.php"><i class="ti ti-brand-instagram"></i> Insta</a>
