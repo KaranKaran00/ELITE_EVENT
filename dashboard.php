@@ -1,9 +1,7 @@
 <?php
-/* dashboard.php — the STUDENT dashboard. Teachers and admins have
-   their own dashboards (teacher/dashboard.php, admin/dashboard.php)
-   with permissions matched to their role. */
+
 require_once __DIR__ . '/includes/data.php';
-$currentUser = require_role('student'); // teachers/admins get bounced to 403.php
+$currentUser = require_role('student'); 
 
 $pageTitle = 'Dashboard — Elite Event';
 require_once __DIR__ . '/includes/header.php';
