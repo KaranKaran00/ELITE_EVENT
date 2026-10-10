@@ -1,13 +1,7 @@
-/* ============================================================
-   Elite Event — College Event Management System
-   style.css  |  Matching the warm gradient design
-   ============================================================ */
-
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght@0,700;1,700&family=Sora:wght@600;700&display=swap');
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-/* ── VARIABLES ── */
 :root {
   --orange:       #E8541A;
   --orange-light: #F4784A;
@@ -39,7 +33,6 @@
   --shadow-md:    0 6px 24px rgba(200,100,30,0.14);
   --shadow-lg:    0 12px 40px rgba(200,100,30,0.18);
 
-  /* Gradient used throughout */
   --grad-hero: linear-gradient(160deg, #FFF5E6 0%, #FFD6B0 30%, #FFB3B3 65%, #E8A0C8 100%);
   --grad-btn:  linear-gradient(135deg, #E8541A 0%, #D4400A 100%);
   --grad-gold: linear-gradient(135deg, #C9962A 0%, #F0C95A 100%);
@@ -59,9 +52,6 @@ body {
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-thumb { background: rgba(200,100,30,0.25); border-radius: 3px; }
 
-/* ============================================================
-   NAVIGATION
-   ============================================================ */
 .nav {
   position: sticky;
   top: 0;
@@ -86,7 +76,6 @@ body {
   flex-shrink: 0;
 }
 
-/* Circular logo badge matching the image */
 .nav-logo-badge {
   width: 48px;
   height: 48px;
@@ -175,9 +164,6 @@ body {
   font-weight: 600;
 }
 
-/* ============================================================
-   BUTTONS
-   ============================================================ */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -235,16 +221,12 @@ body {
 .btn-sm { padding: 6px 16px; font-size: 13px; }
 .btn-block { width: 100%; }
 
-/* ============================================================
-   PAGES
-   ============================================================ */
+
 .page { display: none; min-height: calc(100vh - 64px); }
 .page.active { display: block; }
 .container { max-width: 1140px; margin: 0 auto; padding: 0 2rem; }
 
-/* ============================================================
-   HERO — warm gradient matching the image
-   ============================================================ */
+
 .hero {
   background: var(--grad-hero);
   padding: 5rem 2rem 4rem;
@@ -297,7 +279,6 @@ body {
   margin-right: auto;
 }
 
-/* Hero search bar */
 .hero-search {
   display: flex;
   background: #fff;
@@ -371,9 +352,6 @@ body {
   border-color: var(--orange);
 }
 
-/* ============================================================
-   SECTIONS
-   ============================================================ */
 .section { padding: 3.5rem 0; }
 .section-soft { background: var(--cream); }
 
@@ -399,9 +377,6 @@ body {
 }
 .see-all:hover { opacity: 0.75; }
 
-/* ============================================================
-   CATEGORY TILES
-   ============================================================ */
 .category-tiles {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
@@ -450,9 +425,6 @@ body {
   text-align: center;
 }
 
-/* ============================================================
-   EVENT GRID & CARDS
-   ============================================================ */
 .event-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
@@ -515,9 +487,6 @@ body {
   padding-top: 6px;
 }
 
-/* ============================================================
-   ABOUT / MAKING MOMENTS SECTION
-   ============================================================ */
 .about-split {
   display: grid;
   grid-template-columns: 1fr 1.4fr;
@@ -560,9 +529,6 @@ body {
   box-shadow: var(--shadow-lg);
 }
 
-/* ============================================================
-   STATS BAR
-   ============================================================ */
 .stats-bar {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -601,9 +567,6 @@ body {
   margin-top: 2px;
 }
 
-/* ============================================================
-   CTA BANNER
-   ============================================================ */
 .cta-banner {
   background: linear-gradient(135deg, #1A1208 0%, #3D1A08 60%, #6B2A08 100%);
   padding: 3.5rem 2rem;
@@ -629,9 +592,6 @@ body {
   color: rgba(255,255,255,0.65);
 }
 
-/* ============================================================
-   INSTAGRAM SECTION
-   ============================================================ */
 .instagram-section { background: var(--warm-white); }
 
 .instagram-grid {
@@ -653,9 +613,6 @@ body {
   margin-top: 8px;
 }
 
-/* ============================================================
-   ROLE PILLS & BADGES (nav, dashboards, user tables)
-   ============================================================ */
 .role-pill {
   display: inline-flex;
   align-items: center;
@@ -683,9 +640,6 @@ body {
   font-weight: 700;
 }
 
-/* ============================================================
-   LOGIN ROLE PICKER (login.php hub page)
-   ============================================================ */
 .role-picker {
   display: grid;
   grid-template-columns: repeat(2, 1fr);

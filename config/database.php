@@ -1,5 +1,4 @@
 <?php
-/* MySQL settings for XAMPP. Change these if your MySQL server uses different credentials. */
 return [
     'host' => 'localhost',
     'port' => 3306,
