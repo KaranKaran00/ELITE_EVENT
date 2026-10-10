@@ -28,9 +28,6 @@ require_once __DIR__ . '/includes/header.php';
           <span class="role-picker-desc">Create &amp; manage your own events</span>
         </a>
       </div>
-      <!-- Admin login is intentionally not listed here. It stays reachable only
-           via the direct URL admin-login.php (see the small link in the site
-           footer), so it is never advertised to regular users. -->
 
       <p class="auth-switch">New here? <a href="signup.php">Sign up</a></p>
     </div>
