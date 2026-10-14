@@ -1,5 +1,4 @@
 <?php
-
 require_once __DIR__ . '/includes/data.php';
 $currentUser = require_role('student'); 
 
@@ -13,7 +12,6 @@ $stats = [
     ['label' => 'Available events',  'value' => count($events)],
 ];
 ?>
-
 <section class="page-head">
   <div class="container dashboard-head">
     <div>
@@ -23,7 +21,6 @@ $stats = [
     <a href="events.php" class="btn btn-primary"><i class="ti ti-search"></i> Browse events</a>
   </div>
 </section>
-
 <section class="section">
   <div class="container">
 
@@ -35,7 +32,6 @@ $stats = [
         </div>
       <?php endforeach; ?>
     </div>
-
     <div class="section-head">
       <h2>Recommended for you</h2>
       <a href="events.php" class="see-all">See all events →</a>
@@ -64,7 +60,6 @@ $stats = [
         </div>
       <?php endforeach; ?>
     </div>
-
     <div class="section-head dashboard-registered-head">
       <h2>Your registrations</h2>
       <a href="events.php" class="see-all">Find more events →</a>
@@ -76,13 +71,13 @@ $stats = [
         <?php foreach ($registered as $registration): $rcat = getCategory($registration['category'], $categories); ?>
           <div class="registered-item">
             <span class="dashboard-event-icon" style="--cover-color: <?= htmlspecialchars($rcat['color']) ?>"><?= $rcat['icon'] ?></span>
-            <div class="registered-item-main"><strong><?= htmlspecialchars($registration['title']) ?></strong><span><?= formatEventDate($registration['date']) ?> · <?= htmlspecialchars($registration['venue']) ?></span></div>
+            <div class="registered-item-main"><strong><?= htmlspecialchars($registration['title']) ?></strong>
+            <span><?= formatEventDate($registration['date']) ?> · <?= htmlspecialchars($registration['venue']) ?></span></div>
             <a href="event-detail.php?id=<?= (int)$registration['event_id'] ?>" class="btn btn-ghost btn-sm">View</a>
           </div>
         <?php endforeach; ?>
       </div>
     <?php endif; ?>
-
   </div>
 </section>
 

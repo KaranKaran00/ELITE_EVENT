@@ -29,10 +29,8 @@ function db_config(): array {
 function db(): PDO {
     static $pdo = null;
     if ($pdo !== null) return $pdo;
-
     $c = db_config();
     $charset = $c['charset'] ?? 'utf8mb4';
-
     try {
         $dsn = sprintf(
             'mysql:host=%s;port=%d;dbname=%s;charset=%s',
@@ -48,7 +46,6 @@ function db(): PDO {
             PDO::ATTR_EMULATE_PREPARES => false,
         ]);
     } catch (PDOException $e) {
-        // If the database has not been created yet, create it automatically.
         if ((int)$e->getCode() === 1049) {
             $serverDsn = sprintf('mysql:host=%s;port=%d;charset=%s', $c['host'], (int)($c['port'] ?? 3306), $charset);
             $server = new PDO($serverDsn, $c['username'], $c['password'], [
@@ -58,7 +55,6 @@ function db(): PDO {
             ]);
             $server->exec('CREATE DATABASE IF NOT EXISTS `' . str_replace('`', '``', $c['database']) . '` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci');
             $server = null;
-
             $pdo = new PDO($dsn, $c['username'], $c['password'], [
                 PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
                 PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
@@ -68,7 +64,6 @@ function db(): PDO {
             throw $e;
         }
     }
-
     db_install_or_migrate($pdo);
     return $pdo;
 }

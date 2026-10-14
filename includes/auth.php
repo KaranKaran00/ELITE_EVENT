@@ -37,21 +37,16 @@ function csrf_verify(): bool {
  */
 function current_user(): ?array {
     if (empty($_SESSION['user_id'])) return null;
-
     static $cached = null;
     if ($cached !== null) return $cached;
-
     $stmt = db()->prepare('SELECT id, name, email, role, status FROM users WHERE id = ?');
     $stmt->execute([$_SESSION['user_id']]);
     $user = $stmt->fetch();
-
     if (!$user || $user['status'] !== 'active') {
-        // Account was removed/suspended since login — force logout.
         session_unset();
         session_destroy();
         return null;
     }
-
     $cached = $user;
     return $user;
 }
@@ -59,13 +54,10 @@ function current_user(): ?array {
 function is_logged_in(): bool {
     return current_user() !== null;
 }
-
 function has_role(string ...$roles): bool {
     $user = current_user();
     return $user && in_array($user['role'], $roles, true);
 }
-
-/* ---------- Guards (call at top of a page, before any output) ---------- */
 
 function require_login(string $redirectTo = 'login.php'): array {
     $user = current_user();
@@ -75,13 +67,6 @@ function require_login(string $redirectTo = 'login.php'): array {
     }
     return $user;
 }
-
-/**
- * Require the current user to hold one of the given roles.
- * Logged-out users go to login; logged-in users with the wrong
- * role are sent to a 403 page rather than silently redirected,
- * so it's obvious access was denied rather than "just not found".
- */
 function require_role(string ...$roles): array {
     $user = current_user();
     if (!$user) {
@@ -94,14 +79,6 @@ function require_role(string ...$roles): array {
     }
     return $user;
 }
-
-/* ---------- Login / logout ---------- */
-
-/**
- * Attempts to log in a user, restricted to a specific expected role
- * (so the Student form can't be used to log a teacher/admin in, etc).
- * Returns true on success, or a string error message on failure.
- */
 function attempt_login(string $email, string $password, string $expectedRole) {
     $email = trim($email);
     if ($email === '' || $password === '') {
@@ -112,9 +89,6 @@ function attempt_login(string $email, string $password, string $expectedRole) {
     $stmt->execute([$email]);
     $user = $stmt->fetch();
 
-    // Same generic message whether the email doesn't exist, the
-    // password is wrong, or the role doesn't match — this avoids
-    // leaking which emails are registered or what role they hold.
     $genericError = 'Invalid email or password for this login type.';
 
     if (!$user || !password_verify($password, $user['password_hash'])) {
@@ -127,7 +101,6 @@ function attempt_login(string $email, string $password, string $expectedRole) {
         return 'This account has been suspended. Contact an administrator.';
     }
 
-    // Regenerate session id on privilege change to prevent session fixation.
     session_regenerate_id(true);
     $_SESSION['user_id'] = $user['id'];
 
