@@ -77,10 +77,6 @@ Main tables:
 | `registrations` | Event registration records |
 | `instagram_posts` | Instagram post information |
 
-### Database Relationship
-
-![Elite Event Flow Chart](docs/database-relationship-diagram.png)
-
 ## 🛠️ Technologies
 
 ![PHP](https://img.shields.io/badge/PHP-777BB4?style=for-the-badge&logo=php&logoColor=white)
