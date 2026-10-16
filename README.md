@@ -4,9 +4,6 @@
 
 A web-based event management system where students can discover events and register using Google Forms. Teachers and administrators can manage events, users, and registrations.
 
-## 📊 Flow Chart
-
-![Elite Event Flow Chart](docs/flowchart.png)
 
 ## ✨ Features
 
