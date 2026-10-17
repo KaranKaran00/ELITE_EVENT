@@ -15,6 +15,8 @@ A web-based event management system where students can discover events and regis
 ![Google Forms](https://img.shields.io/badge/Google%20Forms-7248B9?style=for-the-badge&logo=googleforms&logoColor=white)
 ![Google Sheets](https://img.shields.io/badge/Google%20Sheets-34A853?style=for-the-badge&logo=googlesheets&logoColor=white)
 
+# [📄  ELITE EVENT DOCUMENTATION](docs/ELITE_EVENT_DOCUMENTATION.pdf)
+
 ## ✨ Features
 
 ### 👨‍🎓 Student
